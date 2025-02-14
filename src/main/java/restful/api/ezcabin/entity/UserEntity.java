@@ -62,10 +62,25 @@ public class UserEntity {
     private List<CountryEntity> countries;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
-    private List<CountryEntity> cities;
+    private List<CityEntity> cities;
 
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<AirportEntity> airports;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<FlightEntity> flights;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<GateEntity> gates;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<SeatClassEntity> seatClasses;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<FareSeatEntity> fareSeats;    
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<PlaneEntity> planes;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(

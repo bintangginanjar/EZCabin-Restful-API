@@ -12,8 +12,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -25,9 +23,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "cities")
+@Table(name = "airlines")
 @Builder
-public class CityEntity {
+public class AirlineEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +34,6 @@ public class CityEntity {
     @Column(unique = true, length = 4, nullable = false)
     private String code;
 
-    @Column(unique = true, length = 64, nullable = false)
     private String name;
 
     @CreationTimestamp
@@ -47,15 +44,6 @@ public class CityEntity {
     @Column(updatable = true, name = "updated_at")
     private Date updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
-    private UserEntity userEntity;
-
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false, referencedColumnName = "id")
-    private CountryEntity countryEntity;
-
-    @OneToMany(mappedBy = "cityEntity", cascade = CascadeType.ALL)
-    private List<AirportEntity> airports;
-    
+    @OneToMany(mappedBy = "airlineEntity", cascade = CascadeType.ALL)
+    private List<FlightEntity> flights;
 }

@@ -1,18 +1,20 @@
 package restful.api.ezcabin.entity;
 
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,42 +25,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "profiles")
+@Table(name = "gates")
 @Builder
-public class ProfileEntity {
+public class GateEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
-
-    @Column(name = "firstname")
-    private String firstName;
-
-    @Column(name = "lastname")
-    private String lastName;
-    
-    private String phone;
-
-    @Column(name = "birthdate")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date birthDate;
-
-    private String address;
-    private String city;
-
-    @Column(name = "postal_code")
-    private String postalCode;
-    
-    private String email;
-
-    @Column(name = "id_number")
-    private String idNumber;
-
-    @Column(name = "id_expired_at")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
-    private Date idExpiredAt;
+    @Column(unique = true, length = 4, nullable = false)
+    private String name;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
@@ -68,8 +44,11 @@ public class ProfileEntity {
     @Column(updatable = true, name = "updated_at")
     private Date updatedAt;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
+    @ManyToMany(mappedBy = "gates", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    List<AirportEntity> airports;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
     private UserEntity userEntity;
 
 }

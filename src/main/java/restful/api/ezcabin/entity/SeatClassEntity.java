@@ -1,10 +1,6 @@
 package restful.api.ezcabin.entity;
 
-import java.util.Date;
 import java.util.List;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -25,37 +21,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "cities")
+@Table(name = "seat_classes")
 @Builder
-public class CityEntity {
+public class SeatClassEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, length = 4, nullable = false)
-    private String code;
-
-    @Column(unique = true, length = 64, nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @CreationTimestamp
-    @Column(updatable = false, name = "created_at")
-    private Date createdAt;
-
-    @UpdateTimestamp
-    @Column(updatable = true, name = "updated_at")
-    private Date updatedAt;
+    @OneToMany(mappedBy = "seatClassEntity", cascade = CascadeType.ALL)
+    private List<FareSeatEntity> fareSeats;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
     private UserEntity userEntity;
 
-    @ManyToOne
-    @JoinColumn(name = "country_id", nullable = false, referencedColumnName = "id")
-    private CountryEntity countryEntity;
-
-    @OneToMany(mappedBy = "cityEntity", cascade = CascadeType.ALL)
-    private List<AirportEntity> airports;
-    
 }

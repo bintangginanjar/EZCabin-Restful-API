@@ -1,12 +1,5 @@
 package restful.api.ezcabin.entity;
 
-import java.util.Date;
-import java.util.List;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,33 +17,29 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "countries")
+@Table(name = "fare_seat")
 @Builder
-public class CountryEntity {
+public class FareSeatEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, length = 4, nullable = false)
-    private String code;
-
-    @Column(unique = true, length = 64, nullable = false)
+    @Column(unique = true, nullable = false)
     private String name;
 
-    @CreationTimestamp
-    @Column(updatable = false, name = "created_at")
-    private Date createdAt;
+    private Integer price;
 
-    @UpdateTimestamp
-    @Column(updatable = true, name = "updated_at")
-    private Date updatedAt;
+    @ManyToOne
+    @JoinColumn(name = "flight_id", nullable = false, referencedColumnName = "id")
+    private FlightEntity flightEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "seat_class_id", nullable = false, referencedColumnName = "id")
+    private SeatClassEntity seatClassEntity;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
     private UserEntity userEntity;
-
-    @OneToMany(mappedBy = "countryEntity", cascade = CascadeType.REMOVE)
-    private List<CityEntity> cities;
 
 }
