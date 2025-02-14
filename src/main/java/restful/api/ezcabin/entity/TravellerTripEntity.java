@@ -1,8 +1,9 @@
 package restful.api.ezcabin.entity;
 
-import java.util.List;
+import java.util.Date;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,7 +11,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,29 +21,32 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "travellers")
+@Table(name = "traveler_trip")
 @Builder
-public class TravellerEntity {
+public class TravellerTripEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    @Column(name = "eticket")
+    private Integer eTicket;
 
-    @Column(name = "id_number")
-    private String idNumber;
+    @CreationTimestamp
+    @Column(updatable = false, name = "created_at")
+    private Date createdAt;
 
-    @Column(name = "firstname")
-    private String firstName;
+    @UpdateTimestamp
+    @Column(updatable = true, name = "updated_at")
+    private Date updatedAt;
 
-    @Column(name = "lastname")
-    private String lastName;
+    @ManyToOne
+    @JoinColumn(name = "traveller_id", nullable = false, referencedColumnName = "id")
+    private TravellerEntity travellerEntity;
     
-    private String phone;
-
-    @OneToMany(mappedBy = "travellerEntity", cascade = CascadeType.ALL)
-    private List<TravellerTripEntity> travellerTrips;
+    @ManyToOne
+    @JoinColumn(name = "booking_id", nullable = false, referencedColumnName = "id")
+    private BookingEntity bookingEntity;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")

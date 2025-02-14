@@ -82,6 +82,18 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<PlaneEntity> planes;
 
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<BookingEntity> bookings;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<BookingStatusEntity> bookStatuses;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<TravellerEntity> travellers;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<TravellerTripEntity> travellerTrips;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
         name = "users_roles",
