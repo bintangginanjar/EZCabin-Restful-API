@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import restful.api.ezcabin.entity.TravellerTripEntity;
 
-public interface TravellerTripRepository extends JpaRepository<TravellerTripEntity, Long>
+public interface TravellerTripRepository extends JpaRepository<TravellerTripEntity, Long>{
 
 }
