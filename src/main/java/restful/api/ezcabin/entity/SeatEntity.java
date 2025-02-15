@@ -1,7 +1,6 @@
 package restful.api.ezcabin.entity;
 
 import java.util.Date;
-import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -14,7 +13,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,21 +24,17 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "planes")
+@Table(name = "seats")
 @Builder
-public class PlaneEntity {
+public class SeatEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private String type;
 
-    @Column(name = "plane_number")
-    private String planeNumber;
+    @Column(name = "seat_number")
+    private String seatNumber;
 
-    private Integer capacity;
-    
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
@@ -48,14 +43,15 @@ public class PlaneEntity {
     @Column(updatable = true, name = "updated_at")
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "planeEntity", cascade = CascadeType.ALL)
-    private List<FlightEntity> flights;
-
-    @OneToMany(mappedBy = "planeEntity", cascade = CascadeType.ALL)
-    private List<SeatEntity> seats;
+    @OneToOne(mappedBy = "seatEntity", cascade = CascadeType.ALL)    
+    private TravellerTripEntity travellerTripEntity;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
     private UserEntity userEntity;
+
+    @ManyToOne
+    @JoinColumn(name = "plane_id", nullable = false, referencedColumnName = "id")
+    private PlaneEntity planeEntity;
 
 }

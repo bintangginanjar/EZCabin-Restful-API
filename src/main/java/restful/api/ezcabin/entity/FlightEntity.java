@@ -54,6 +54,9 @@ public class FlightEntity {
     @OneToMany(mappedBy = "flightEntity", cascade = CascadeType.ALL)
     private List<FareSeatEntity> fareSeats;
 
+    @OneToMany(mappedBy = "flightEntity", cascade = CascadeType.ALL)
+    private List<FlightTripEntity> flights;
+
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
     private UserEntity userEntity;

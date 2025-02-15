@@ -11,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,10 @@ public class TravellerTripEntity {
 
     @Column(name = "eticket")
     private Integer eTicket;
+
+    @OneToOne
+    @JoinColumn(name = "seat_id")
+    private SeatEntity seatEntity;
 
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")

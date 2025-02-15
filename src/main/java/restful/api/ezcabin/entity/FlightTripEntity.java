@@ -1,10 +1,8 @@
 package restful.api.ezcabin.entity;
 
 import java.util.Date;
-import java.util.List;
 
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -14,7 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,34 +23,28 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "planes")
+@Table(name = "flight_trip")
 @Builder
-public class PlaneEntity {
+public class FlightTripEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    private String type;
 
-    @Column(name = "plane_number")
-    private String planeNumber;
+    @OneToOne(mappedBy = "flightTripEntity", cascade = CascadeType.ALL)    
+    private BookingEntity bookingEntity;
 
-    private Integer capacity;
-    
-    @CreationTimestamp
-    @Column(updatable = false, name = "created_at")
-    private Date createdAt;
+    @Column(name = "depart_time")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private Date departTime;
 
-    @UpdateTimestamp
-    @Column(updatable = true, name = "updated_at")
-    private Date updatedAt;
+    @Column(name = "arrival_date")
+    @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
+    private Date arrivalTime;
 
-    @OneToMany(mappedBy = "planeEntity", cascade = CascadeType.ALL)
-    private List<FlightEntity> flights;
-
-    @OneToMany(mappedBy = "planeEntity", cascade = CascadeType.ALL)
-    private List<SeatEntity> seats;
+    @ManyToOne
+    @JoinColumn(name = "flight_id", nullable = false, referencedColumnName = "id")
+    private FlightEntity flightEntity;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")

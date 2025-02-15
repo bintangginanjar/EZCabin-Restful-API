@@ -25,21 +25,18 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "planes")
+@Table(name = "discounts")
 @Builder
-public class PlaneEntity {
+public class DiscountEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String type;
+    private String name;
 
-    @Column(name = "plane_number")
-    private String planeNumber;
+    private Double amount;
 
-    private Integer capacity;
-    
     @CreationTimestamp
     @Column(updatable = false, name = "created_at")
     private Date createdAt;
@@ -48,14 +45,10 @@ public class PlaneEntity {
     @Column(updatable = true, name = "updated_at")
     private Date updatedAt;
 
-    @OneToMany(mappedBy = "planeEntity", cascade = CascadeType.ALL)
-    private List<FlightEntity> flights;
-
-    @OneToMany(mappedBy = "planeEntity", cascade = CascadeType.ALL)
-    private List<SeatEntity> seats;
+    @OneToMany(mappedBy = "discountEntity", cascade = CascadeType.ALL)
+    private List<FareEntity> fares;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "id")
     private UserEntity userEntity;
-
 }
