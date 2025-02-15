@@ -109,6 +109,9 @@ public class UserEntity {
     @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
     private List<SeatEntity> seats;
 
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL)
+    private List<AirlineEntity> airlines;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
         name = "users_roles",

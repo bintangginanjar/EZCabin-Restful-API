@@ -34,6 +34,10 @@ public class FlightTripEntity {
     @OneToOne(mappedBy = "flightTripEntity", cascade = CascadeType.ALL)    
     private BookingEntity bookingEntity;
 
+    @Column(name = "boarding_time")
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    private Date boardingTime;
+
     @Column(name = "depart_time")
     @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm:ss")
     private Date departTime;

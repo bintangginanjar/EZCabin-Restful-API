@@ -30,6 +30,8 @@ public class FareSeatEntity {
 
     private Integer price;
 
+    private String description;
+
     @ManyToOne
     @JoinColumn(name = "flight_id", nullable = false, referencedColumnName = "id")
     private FlightEntity flightEntity;
