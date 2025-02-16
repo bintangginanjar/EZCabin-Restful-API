@@ -35,6 +35,7 @@ public class TaxEntity {
     
     private String name;
 
+    //@Column(columnDefinition = "NUMERIC")
     private Double amount;
 
     @CreationTimestamp

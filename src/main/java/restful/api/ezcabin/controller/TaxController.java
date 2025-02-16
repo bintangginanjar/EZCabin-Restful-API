@@ -40,7 +40,7 @@ public class TaxController {
     public WebResponse<TaxResponse> register(Authentication authentication, 
                                             @RequestBody RegisterTaxRequest request) {
 
-        TaxResponse response = taxService.create(null, request);
+        TaxResponse response = taxService.create(authentication, request);
 
         return WebResponse.<TaxResponse>builder()
                                         .status(true)
