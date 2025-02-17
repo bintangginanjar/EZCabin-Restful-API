@@ -16,7 +16,7 @@ public class UpdateTaxRequest {
 
     @NotBlank
     @JsonIgnore
-    private Long id;
+    private String id;
 
     private String name;
 

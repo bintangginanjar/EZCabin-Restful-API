@@ -9,6 +9,8 @@ import restful.api.ezcabin.entity.UserEntity;
 public interface UserRepository extends JpaRepository<UserEntity, Long>{
     
     Optional<UserEntity> findByUsername(String username);
+    
+    Optional<UserEntity> findFirstByUsernameAndIsActive(String username, Boolean isActive);
 
     Optional<UserEntity> findFirstByToken(String token);
 

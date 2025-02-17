@@ -41,8 +41,13 @@ public class TaxService {
     public TaxResponse create(Authentication authentication, RegisterTaxRequest request) {
         validationService.validate(request);            
 
+        /*
         UserEntity user = userRepository.findByUsername(authentication.getName())
-                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));     
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        */
+
+        UserEntity user = userRepository.findFirstByUsernameAndIsActive(authentication.getName(), true)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found or inactive"));
 
         TaxEntity tax = new TaxEntity();
         tax.setName(request.getName());
@@ -64,8 +69,13 @@ public class TaxService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request");
         }
 
+        /*
         UserEntity user = userRepository.findByUsername(authentication.getName())
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        */
+
+        UserEntity user = userRepository.findFirstByUsernameAndIsActive(authentication.getName(), true)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found or inactive"));
 
         TaxEntity tax = taxRepository.findFirstByUserEntityAndId(user, taxId)
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tax not found"));
@@ -75,8 +85,13 @@ public class TaxService {
 
     @Transactional(readOnly = true)
     public List<TaxResponse> list(Authentication authentication) {
+        /*
         UserEntity user = userRepository.findByUsername(authentication.getName())
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        */
+
+        UserEntity user = userRepository.findFirstByUsernameAndIsActive(authentication.getName(), true)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found or inactive"));
 
         List<TaxEntity> taxes = taxRepository.findAllByUserEntity(user);
 
@@ -95,8 +110,13 @@ public class TaxService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request");
         }
 
+        /*
         UserEntity user = userRepository.findByUsername(authentication.getName())
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        */
+
+        UserEntity user = userRepository.findFirstByUsernameAndIsActive(authentication.getName(), true)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found or inactive"));
 
         TaxEntity tax = taxRepository.findFirstByUserEntityAndId(user, taxId)
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tax not found"));
@@ -124,8 +144,13 @@ public class TaxService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Bad request");
         }
 
+        /*
         UserEntity user = userRepository.findByUsername(authentication.getName())
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        */
+
+        UserEntity user = userRepository.findFirstByUsernameAndIsActive(authentication.getName(), true)
+                            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found or inactive"));
 
         TaxEntity tax = taxRepository.findFirstByUserEntityAndId(user, taxId)
                             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tax not found"));

@@ -42,7 +42,7 @@ public class RoleEntity {
     @Column(updatable = true, name = "updated_at")
     private Date updatedAt;
 
-    @ManyToMany(mappedBy = "roles", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
+    @ManyToMany(mappedBy = "roles", cascade = CascadeType.MERGE)
     List<UserEntity> users;
 
 }
